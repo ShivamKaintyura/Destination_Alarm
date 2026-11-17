@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Destination Alarm</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --line:#263041; --txt:#e6edf3; --dim:#8b98a9;
+    --accent:#3fb950; --warn:#f0883e; --danger:#f85149; --radius:16px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overscroll-behavior:none}
+  #map{position:fixed;inset:0;background:#111}
+  .leaflet-container{background:#0d1117}
+
+  /* top bar */
+  #topbar{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;gap:8px;
+    padding:calc(10px + env(safe-area-inset-top)) 12px 10px}
+  #searchWrap{flex:1;display:flex;gap:8px;background:var(--panel);border:1px solid var(--line);
+    border-radius:999px;padding:6px 6px 6px 14px;box-shadow:0 6px 24px rgba(0,0,0,.45)}
+  #q{flex:1;background:none;border:0;color:var(--txt);font-size:15px;outline:none}
+  #q::placeholder{color:var(--dim)}
+  #searchBtn{border:0;border-radius:999px;padding:9px 16px;background:var(--accent);color:#04120a;
+    font-weight:700;font-size:14px;cursor:pointer}
+  #locBtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--panel);
+    color:var(--txt);font-size:18px;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.45)}
+
+  /* results */
+  #results{position:fixed;z-index:650;left:12px;right:12px;
+    top:calc(66px + env(safe-area-inset-top));background:var(--panel);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;display:none}
+  #results button{display:block;width:100%;text-align:left;background:none;border:0;
+    border-bottom:1px solid var(--line);color:var(--txt);padding:13px 15px;font-size:14px;cursor:pointer}
+  #results button:last-child{border-bottom:0}
+  #results button:active{background:#1f2733}
+
+  /* bottom sheet */
+  #sheet{position:fixed;left:0;right:0;bottom:0;z-index:600;background:var(--panel);
+    border-top:1px solid var(--line);border-radius:22px 22px 0 0;
+    padding:14px 16px calc(16px + env(safe-area-inset-bottom));
+    box-shadow:0 -14px 40px rgba(0,0,0,.55);max-height:62vh;overflow:auto}
+  .grab{width:38px;height:4px;border-radius:2px;background:#2f3b4d;margin:0 auto 12px}
+  .destRow{display:flex;align-items:center;gap:10px;margin-bottom:16px;min-height:34px}
+  .destRow .pin{font-size:20px}
+  #destName{font-size:15px;font-weight:600;line-height:1.25}
+  #destName.empty{color:var(--dim);font-weight:400}
+
+  .field{margin-bottom:16px}
+  .fieldTop{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .fieldTop label{font-size:13px;color:var(--dim);letter-spacing:.02em}
+  .fieldTop b{font-size:14px;font-weight:700}
+  input[type=range]{width:100%;height:28px;background:transparent;-webkit-appearance:none;appearance:none}
+  input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:#243044}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-9px;
+    border-radius:50%;background:var(--accent);border:3px solid #0d1117;box-shadow:0 0 0 1px var(--accent)}
+  input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:#243044}
+  input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);border:3px solid #0d1117}
+
+  #status{display:none;gap:10px;margin-bottom:14px;text-align:center}
+  #status.on{display:grid;grid-template-columns:1fr 1fr}
+  .stat{background:#0f151d;border:1px solid var(--line);border-radius:12px;padding:10px 8px}
+  .stat span{display:block;font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+  .stat strong{font-size:20px;font-variant-numeric:tabular-nums}
+  #gpsNote{grid-column:1/-1;font-size:11.5px;color:var(--dim)}
+
+  .actions{display:flex;gap:10px}
+  .btn{flex:1;border:0;border-radius:14px;padding:16px;font-size:16px;font-weight:700;cursor:pointer}
+  .btn-primary{background:var(--accent);color:#04120a}
+  .btn-primary:disabled{background:#25303f;color:#5d6b7d;cursor:not-allowed}
+  .btn-stop{background:#3a1d20;color:#ff8f88;border:1px solid #5c2a2e}
+  .btn-ghost{flex:0 0 auto;width:56px;background:#1b2330;color:var(--txt);border:1px solid var(--line);font-size:18px}
+
+  /* alarm */
+  #alarm{position:fixed;inset:0;z-index:9000;display:none;flex-direction:column;
+    align-items:center;justify-content:center;gap:26px;text-align:center;padding:24px;
+    background:radial-gradient(circle at 50% 40%,#3a0d10,#0d0405 70%);animation:flash 1.1s infinite}
+  #alarm.on{display:flex}
+  @keyframes flash{0%,100%{background-color:#120506}50%{background-color:#3c0b10}}
+  #alarm .bell{font-size:76px;animation:shake .55s infinite}
+  @keyframes shake{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+  #alarm h1{margin:0;font-size:30px;line-height:1.15}
+  #alarm p{margin:0;color:#d9a7a7;font-size:14px}
+  #alarm .alarmBtns{display:flex;flex-direction:column;gap:12px;width:100%;max-width:340px;margin-top:10px}
+  #alarm .alarmBtns .btn{padding:19px}
+  #dismissBtn{background:#f2f5f8;color:#111}
+  #snoozeBtn{background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.22)}
+
+  #toast{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);
+    z-index:9500;background:#f2f5f8;color:#111;padding:11px 18px;border-radius:999px;font-size:14px;font-weight:600;
+    opacity:0;pointer-events:none;transition:.25s}
+  #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .me-dot{width:20px;height:20px;border-radius:50%;background:#4a9eff;border:3px solid #fff;box-shadow:0 0 0 8px rgba(74,158,255,.22)}
+  .dest-pin{font-size:30px;line-height:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div id="topbar">
+  <div id="searchWrap">
+    <input id="q" type="search" placeholder="Search a place or station…" autocomplete="off">
+    <button id="searchBtn">Find</button>
+  </div>
+  <button id="locBtn" title="My location">◎</button>
+</div>
+<div id="results"></div>
+
+<div id="sheet">
+  <div class="grab"></div>
+
+  <div class="destRow">
+    <span class="pin">📍</span>
+    <div id="destName" class="empty">Tap the map or search to set your destination</div>
+  </div>
+
+  <div id="status">
+    <div class="stat"><span>Distance</span><strong id="sDist">—</strong></div>
+    <div class="stat"><span>ETA</span><strong id="sEta">—</strong></div>
+    <div id="gpsNote">Waiting for GPS…</div>
+  </div>
+
+  <div class="field">
+    <div class="fieldTop"><label>Alarm radius</label><b id="rVal">500 m</b></div>
+    <input id="radius" type="range" min="200" max="2000" step="100" value="500">
+  </div>
+
+  <div class="field">
+    <div class="fieldTop"><label>Ring before arrival</label><b id="mVal">Off</b></div>
+    <input id="mins" type="range" min="0" max="10" step="1" value="0">
+  </div>
+
+  <div class="actions">
+    <button id="startBtn" class="btn btn-primary" disabled>Start alarm</button>
+    <button id="testBtn" class="btn btn-ghost" title="Test the alarm">🔔</button>
+  </div>
+</div>
+
+<div id="alarm">
+  <div class="bell">⏰</div>
+  <div>
+    <h1 id="alarmTitle">You're here!</h1>
+    <p id="alarmSub">Destination reached</p>
+  </div>
+  <div class="alarmBtns">
+    <button id="dismissBtn" class="btn">Dismiss</button>
+    <button id="snoozeBtn" class="btn">Snooze 5 min</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const $ = (s) => document.querySelector(s);
+  const RADIUS_MIN_M = 200;
+
+  let map, destMarker, meMarker, radiusCircle;
+  let dest = null;              // { lat, lng, name }
+  let watchId = null;
+  let state = 'idle';           // idle | armed | alarming
+  let snoozeUntil = 0;
+  let lastFix = null;           // { lat, lng, t, speed, acc }
+  let derivedSpeed = 0;         // m/s fallback
+  let audioCtx = null, beepTimer = null, vibTimer = null;
+  let wakeLock = null;
+
+  const radiusM = () => Number($('#radius').value);
+  const minsBefore = () => Number($('#mins').value);
+
+  /* ---------- map ---------- */
+  function initMap() {
+    map = L.map('map', { zoomControl: false, attributionControl: false })
+      .setView([20.5937, 78.9629], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+
+    map.on('click', (e) => setDestination(e.latlng.lat, e.latlng.lng, 'Dropped pin'));
+    setTimeout(() => map.invalidateSize(), 300);
+  }
+
+  function setDestination(lat, lng, name) {
+    dest = { lat, lng, name: name || 'Dropped pin' };
+
+    if (!destMarker) {
+      destMarker = L.marker([lat, lng], {
+        icon: L.divIcon({ className: '', html: '<div class="dest-pin">📍</div>', iconSize: [30, 30], iconAnchor: [15, 30] })
+      }).addTo(map);
+    } else {
+      destMarker.setLatLng([lat, lng]);
+    }
+
+    if (!radiusCircle) {
+      radiusCircle = L.circle([lat, lng], {
+        radius: radiusM(), color: '#3fb950', weight: 2, fillColor: '#3fb950', fillOpacity: 0.12
+      }).addTo(map);
+    } else {
+      radiusCircle.setLatLng([lat, lng]).setRadius(radiusM());
+    }
+
+    const el = $('#destName');
+    el.textContent = dest.name;
+    el.classList.remove('empty');
+    $('#startBtn').disabled = state !== 'idle';
+
+    map.flyTo([lat, lng], Math.max(map.getZoom(), 14), { duration: 0.8 });
+    updateStatus();
+  }
+
+  /* ---------- search ---------- */
+  async function search(q) {
+    if (!q.trim()) return;
+    const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + encodeURIComponent(q);
+    try {
+      const res = await fetch(url, { headers: { Accept: 'application/json' } });
+      const list = await res.json();
+      const box = $('#results');
+      box.innerHTML = '';
+      if (!list.length) { toast('No place found'); return; }
+      list.forEach((r) => {
+        const b = document.createElement('button');
+        b.textContent = r.display_name;
+        b.onclick = () => {
+          box.style.display = 'none';
+          setDestination(Number(r.lat), Number(r.lon), r.display_name.split(',')[0]);
+        };
+        box.appendChild(b);
+      });
+      box.style.display = 'block';
+    } catch (e) {
+      toast('Search failed — check connection');
+    }
+  }
+
+  /* ---------- geo ---------- */
+  function haversine(a, b) {
+    const R = 6371000, toRad = Math.PI / 180;
+    const dLat = (b.lat - a.lat) * toRad;
+    const dLng = (b.lng - a.lng) * toRad;
+    const h = Math.sin(dLat / 2) ** 2 +
+      Math.cos(a.lat * toRad) * Math.cos(b.lat * toRad) * Math.sin(dLng / 2) ** 2;
+    return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
+  }
+
+  function onFix(pos) {
+    const c = pos.coords;
+    const now = pos.timestamp || Date.now();
+    const p = { lat: c.latitude, lng: c.longitude, t: now, speed: c.speed, acc: c.accuracy };
+
+    if (lastFix) {
+      const d = haversine(lastFix, p);
+      const dt = (p.t - lastFix.t) / 1000;
+      if (dt > 1) derivedSpeed = d / dt;
+    }
+    lastFix = p;
+
+    if (!meMarker) {
+      meMarker = L.marker([p.lat, p.lng], {
+        icon: L.divIcon({ className: '', html: '<div class="me-dot"></div>', iconSize: [20, 20], iconAnchor: [10, 10] }),
+        interactive: false
+      }).addTo(map);
+    } else {
+      meMarker.setLatLng([p.lat, p.lng]);
+    }
+
+    updateStatus();
+    evaluate();
+  }
+
+  function currentSpeed() {
+    if (!lastFix) return 0;
+    if (typeof lastFix.speed === 'number' && lastFix.speed >= 0) return lastFix.speed;
+    return derivedSpeed;
+  }
+
+  function updateStatus() {
+    const box = $('#status');
+    if (!lastFix) { box.classList.remove('on'); return; }
+
+    if (!dest) {
+      box.classList.add('on');
+      $('#sDist').textContent = '—';
+      $('#sEta').textContent = '—';
+      $('#gpsNote').textContent = 'GPS locked · accuracy ±' + Math.round(lastFix.acc) + ' m';
+      return;
+    }
+
+    box.classList.add('on');
+    const d = haversine(lastFix, dest);
+    const v = currentSpeed();
+    const eta = v > 0.7 ? d / v : Infinity;
+
+    $('#sDist').textContent = d < 1000 ? Math.round(d) + ' m' : (d / 1000).toFixed(2) + ' km';
+    $('#sEta').textContent = isFinite(eta) ? fmtTime(eta) : '—';
+
+    const age = (Date.now() - lastFix.t) / 1000;
+    let note = 'accuracy ±' + Math.round(lastFix.acc) + ' m · ' + Math.round(v * 3.6) + ' km/h';
+    if (age > 45) note += ' · GPS stale (' + Math.round(age) + 's)';
+    if (lastFix.acc > 150) note += ' · weak signal';
+    $('#gpsNote').textContent = note;
+  }
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60), s = Math.round(sec % 60);
+    return m > 0 ? m + 'm ' + s + 's' : s + 's';
+  }
+
+  /* ---------- tracking ---------- */
+  function start() {
+    if (!dest || state !== 'idle') return;
+
+    unlockAudio();
+    state = 'armed';
+    snoozeUntil = 0;
+    $('#startBtn').textContent = 'Stop';
+    $('#startBtn').classList.remove('btn-primary');
+    $('#startBtn').classList.add('btn-stop');
+    $('#startBtn').disabled = false;
+    $('#testBtn').style.visibility = 'hidden';
+
+    if (!('geolocation' in navigator)) { toast('Geolocation not supported'); reset(); return; }
+
+    watchId = navigator.geolocation.watchPosition(onFix, onGeoError, {
+      enableHighAccuracy: true, maximumAge: 5000, timeout: 20000
+    });
+
+    requestWakeLock();
+    toast('Tracking started — you can lock your phone');
+  }
+
+  function stop() {
+    if (watchId !== null) { navigator.geolocation.clearWatch(watchId); watchId = null; }
+    stopBeeps();
+    state = 'idle';
+    hideAlarm();
+    $('#startBtn').textContent = 'Start alarm';
+    $('#startBtn').classList.remove('btn-stop');
+    $('#startBtn').classList.add('btn-primary');
+    $('#startBtn').disabled = !dest;
+    $('#testBtn').style.visibility = 'visible';
+    releaseWakeLock();
+  }
+
+  function onGeoError(err) {
+    toast('Location error: ' + err.message);
+    if (err.code === 1) stop();
+  }
+
+  /* ---------- trigger ---------- */
+  function evaluate() {
+    if (state !== 'armed' || !dest || !lastFix) return;
+    if (Date.now() < snoozeUntil) return;
+
+    const d = haversine(lastFix, dest);
+    const acc = lastFix.acc;
+    const goodEnough = acc <= 150 || d <= acc * 1.5;   // allow trigger if distance is within error margin
+
+    if (d <= radiusM() && goodEnough) {
+      trigger('Destination reached', Math.round(d) + ' m away');
+      return;
+    }
+
+    const mb = minsBefore();
+    if (mb > 0) {
+      const v = currentSpeed();
+      if (v > 0.7) {
+        const eta = d / v;
+        if (eta <= mb * 60) trigger('Almost there', 'About ' + fmtTime(eta) + ' to destination');
+      }
+    }
+  }
+
+  function trigger(title, sub) {
+    state = 'alarming';
+    $('#alarmTitle').textContent = title;
+    $('#alarmSub').textContent = sub;
+    $('#alarm').classList.add('on');
+    startBeeps();
+    startVibration();
+  }
+
+  function dismiss() {
+    stop();
+    toast('Alarm dismissed');
+  }
+
+  function snooze() {
+    stopBeeps();
+    hideAlarm();
+    state = 'armed';
+    snoozeUntil = Date.now() + 5 * 60 * 1000;
+    toast('Snoozed for 5 minutes');
+  }
+
+  function hideAlarm() { $('#alarm').classList.remove('on'); }
+
+  /* ---------- sound ---------- */
+  function unlockAudio() {
+    if (audioCtx) { audioCtx.resume(); return; }
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    audioCtx = new AC();
+  }
+
+  function beep() {
+    if (!audioCtx) return;
+    const t = audioCtx.currentTime;
+    for (let i = 0; i < 2; i++) {
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      const at = t + i * 0.24;
+      o.type = 'square';
+      o.frequency.setValueAtTime(i ? 880 : 1180, at);
+      g.gain.setValueAtTime(0.0001, at);
+      g.gain.exponentialRampToValueAtTime(0.75, at + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, at + 0.19);
+      o.connect(g).connect(audioCtx.destination);
+      o.start(at); o.stop(at + 0.2);
+    }
+  }
+
+  function startBeeps() {
+    unlockAudio();
+    beep();
+    beepTimer = setInterval(beep, 1100);
+  }
+
+  function stopBeeps() {
+    if (beepTimer) { clearInterval(beepTimer); beepTimer = null; }
+    if (vibTimer) { clearInterval(vibTimer); vibTimer = null; }
+    if (navigator.vibrate) navigator.vibrate(0);
+  }
+
+  function startVibration() {
+    if (!navigator.vibrate) return;
+    const pattern = [600, 200, 600, 200, 600, 500];
+    navigator.vibrate(pattern);
+    vibTimer = setInterval(() => navigator.vibrate(pattern), 3200);
+  }
+
+  /* ---------- wake lock ---------- */
+  async function requestWakeLock() {
+    try {
+      if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen');
+    } catch (e) { /* ignore */ }
+  }
+  function releaseWakeLock() { if (wakeLock) { wakeLock.release(); wakeLock = null; } }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && state === 'armed' && !wakeLock) requestWakeLock();
+  });
+
+  /* ---------- ui ---------- */
+  let toastTimer = null;
+  function toast(msg) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('on'), 2600);
+  }
+
+  function wire() {
+    $('#searchBtn').onclick = () => search($('#q').value);
+    $('#q').addEventListener('keydown', (e) => { if (e.key === 'Enter') search($('#q').value); });
+
+    $('#locBtn').onclick = () => {
+      navigator.geolocation.getCurrentPosition(
+        (p) => map.flyTo([p.coords.latitude, p.coords.longitude], 16, { duration: 0.9 }),
+        () => toast('Could not get your location'),
+        { enableHighAccuracy: true, timeout: 15000 }
+      );
+    };
+
+    $('#radius').oninput = (e) => {
+      $('#rVal').textContent = e.target.value + ' m';
+      if (radiusCircle) radiusCircle.setRadius(radiusM());
+      if (state === 'armed') evaluate();
+    };
+
+    $('#mins').oninput = (e) => {
+      const m = Number(e.target.value);
+      $('#mVal').textContent = m === 0 ? 'Off' : m + ' min';
+      if (state === 'armed') evaluate();
+    };
+
+    $('#startBtn').onclick = () => { state === 'idle' ? start() : stop(); };
+    $('#testBtn').onclick = () => trigger('Test alarm', 'This is how it will sound');
+    $('#dismissBtn').onclick = dismiss;
+    $('#snoozeBtn').onclick = snooze;
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#searchWrap') && !e.target.closest('#results')) $('#results').style.display = 'none';
+    });
+
+    setInterval(updateStatus, 1000);
+  }
+
+  initMap();
+  wire();
+
+  // centre on user if they allow it
+  navigator.geolocation?.getCurrentPosition(
+    (p) => map.setView([p.coords.latitude, p.coords.longitude], 14),
+    () => {},
+    { enableHighAccuracy: false, timeout: 8000 }
+  );
+})();
+</script>
+</body>
+</html>

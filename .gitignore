@@ -1,0 +1,29 @@
+# ---------- OS / editors ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+*.iml
+.vscode/
+
+# ---------- Android / Gradle ----------
+android/.gradle/
+android/.kotlin/
+android/build/
+android/app/build/
+android/captures/
+android/local.properties
+*.apk
+*.aab
+*.jks
+*.keystore
+*.hprof
+
+# ---------- Build artifacts / local scratch ----------
+# The APK is distributed through GitHub Releases, not committed to the repo.
+apk/
+build-logs/
+*.zip
+*.mp4
+*.log
+Screenshot*.png

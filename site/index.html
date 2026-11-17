@@ -1,0 +1,648 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Destination Alarm — wake up at your stop, even on silent</title>
+<meta name="description" content="Destination Alarm rings like a real alarm when you reach your metro station, office or any pin on the map. Phone locked, screen off, silent mode on. Free maps, no account, Android APK.">
+<meta name="theme-color" content="#060A08">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Destination Alarm — wake up at your stop">
+<meta property="og:description" content="Rings like a real alarm when you reach your destination. Locked screen. Silent mode. No account.">
+<meta property="og:image" content="https://destination-alarm.netlify.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Destination Alarm — rings when you reach your stop">
+<meta property="og:url" content="https://destination-alarm.netlify.app/">
+<meta property="og:site_name" content="Destination Alarm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Destination Alarm — wake up at your stop">
+<meta name="twitter:description" content="Rings like a real alarm when you reach your destination. Locked screen. Silent mode. No account.">
+<meta name="twitter:image" content="https://destination-alarm.netlify.app/og.png">
+<link rel="canonical" href="https://destination-alarm.netlify.app/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Destination Alarm",
+  "operatingSystem": "Android 8.0+",
+  "applicationCategory": "TravelApplication",
+  "description": "An alarm that rings when you are about to reach your destination, even with the screen locked and the phone on silent.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+}
+</script>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Destination Alarm home">
+      <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
+        <defs>
+          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0A1410"/><stop offset="1" stop-color="#14522F"/>
+          </linearGradient>
+        </defs>
+        <rect width="40" height="40" rx="11" fill="url(#bg)"/>
+        <path d="M20 7c-4.1 0-7.4 3.3-7.4 7.4 0 5.5 7.4 13.6 7.4 13.6s7.4-8.1 7.4-13.6C27.4 10.3 24.1 7 20 7z" fill="#46E07A"/>
+        <circle cx="20" cy="14.3" r="4.4" fill="#08120D"/>
+        <path d="M20 11.8v2.6l1.7 1" stroke="#46E07A" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span>Destination<span class="brand-accent">Alarm</span></span>
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-sm btn-primary" href="#download">Download</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-grid"></div>
+    <div class="wrap hero-inner">
+
+      <div class="hero-copy">
+        <div class="badge rise">
+          <span class="dot pulse"></span> v1.3 · Free maps · No account
+        </div>
+
+        <h1 class="rise" style="--d:.05s">
+          Sleep through the commute.<br>
+          <span class="grad">Wake up at your stop.</span>
+        </h1>
+
+        <p class="lead rise" style="--d:.1s">
+          Destination Alarm rings like a real alarm the moment you're near your metro station,
+          office, or any pin on the map. Phone locked. Screen off. <strong>Silent mode on.</strong>
+        </p>
+
+        <div class="cta-row rise" style="--d:.15s">
+          <a class="btn btn-primary btn-lg" href="DestinationAlarm.apk" download>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v11m0 0 4.2-4.2M12 14l-4.2-4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17.5V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Download APK
+          </a>
+          <a class="btn btn-ghost btn-lg" href="#how">See how it works</a>
+        </div>
+
+        <div class="micro rise" style="--d:.2s">
+          68 MB · Android 8.0+ · No login · Installs over v1.2
+        </div>
+
+        <ul class="trust rise" style="--d:.25s">
+          <li>🔊 Rings on silent</li>
+          <li>🚇 Tunnel mode</li>
+          <li>🔒 Nothing uploaded</li>
+        </ul>
+      </div>
+
+      <!-- Phone mockup -->
+      <div class="hero-phone rise" style="--d:.2s" aria-hidden="true">
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="screen">
+            <svg class="map" viewBox="0 0 300 610" preserveAspectRatio="xMidYMid slice">
+              <rect width="300" height="610" fill="#0A1210"/>
+              <g fill="#0F1A15">
+                <rect x="8" y="46" width="66" height="50" rx="5"/>
+                <rect x="86" y="38" width="48" height="58" rx="5"/>
+                <rect x="150" y="52" width="62" height="44" rx="5"/>
+                <rect x="226" y="40" width="70" height="60" rx="5"/>
+                <rect x="18" y="118" width="52" height="46" rx="5"/>
+                <rect x="82" y="112" width="74" height="52" rx="5"/>
+                <rect x="172" y="116" width="54" height="48" rx="5"/>
+                <rect x="240" y="120" width="56" height="42" rx="5"/>
+                <rect x="12" y="312" width="60" height="48" rx="5"/>
+                <rect x="88" y="306" width="54" height="56" rx="5"/>
+                <rect x="158" y="318" width="72" height="44" rx="5"/>
+                <rect x="246" y="310" width="50" height="52" rx="5"/>
+                <rect x="22" y="392" width="66" height="52" rx="5"/>
+                <rect x="104" y="386" width="48" height="58" rx="5"/>
+                <rect x="170" y="398" width="68" height="46" rx="5"/>
+                <rect x="16" y="490" width="58" height="50" rx="5"/>
+                <rect x="90" y="484" width="62" height="54" rx="5"/>
+              </g>
+              <path d="M186 300c26-18 62-6 78 18s14 54-8 68-58 6-74-14-22-56 4-72z" fill="#0E271C"/>
+              <path d="M-30 206C50 232 82 300 168 318s120 54 190 66" stroke="#0B2A3C" stroke-width="34" fill="none" stroke-linecap="round"/>
+              <path d="M-30 206C50 232 82 300 168 318s120 54 190 66" stroke="#103C55" stroke-width="3" fill="none" opacity=".7"/>
+              <g stroke="#192621" stroke-width="8" stroke-linecap="round" fill="none">
+                <path d="M-10 154 L312 190"/>
+                <path d="M58 -10 L96 620"/>
+                <path d="M-10 452 L312 430"/>
+              </g>
+              <g stroke="#15201C" stroke-width="3.5" stroke-linecap="round" fill="none">
+                <path d="M-10 262 L312 296"/>
+                <path d="M186 -10 L200 620"/>
+                <path d="M-10 546 L312 520"/>
+              </g>
+              <g fill="#3C4F45" font-size="6.4" letter-spacing="1.2" font-family="system-ui,sans-serif">
+                <text x="16" y="140">CONNAUGHT PLACE</text>
+                <text x="188" y="382">INDIA GATE</text>
+                <text x="112" y="574">LAJPAT NAGAR</text>
+              </g>
+            </svg>
+
+            <svg class="route" viewBox="0 0 300 610" preserveAspectRatio="none">
+              <path class="route-glow" d="M64 520 C 86 430 150 340 178 250"/>
+              <path class="route-line" d="M64 520 C 86 430 150 340 178 250"/>
+            </svg>
+
+            <div class="dest-pin">
+              <span class="halo"></span><span class="halo h2"></span><span class="pin-dot"></span>
+            </div>
+            <div class="user-dot"></div>
+
+            <div class="phone-ui">
+              <div class="search-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="#8FA399" stroke-width="2"/><path d="m16 16 4 4" stroke="#8FA399" stroke-width="2" stroke-linecap="round"/></svg>
+                <span>Search any place…</span>
+              </div>
+              <div class="armed-pill"><i></i> Alarm armed · 12 min away</div>
+            </div>
+
+            <div class="sheet">
+              <div class="grab"></div>
+              <div class="sheet-head">
+                <div class="ic">📍</div>
+                <div class="sheet-title">
+                  <strong>Rajiv Chowk Metro</strong>
+                  <span>500 m radius · Transit</span>
+                </div>
+                <div class="star">⭐</div>
+              </div>
+
+              <div class="chips">
+                <span>🏠 Home</span><span>🏢 Work</span><span>⭐ Gym</span>
+              </div>
+
+              <div class="stats">
+                <div class="stat"><small>DISTANCE</small><b class="blue">2.4 km</b></div>
+                <div class="stat"><small>ETA</small><b class="green">12 min</b></div>
+                <div class="stat"><small>RING AT</small><b class="amber">500 m</b></div>
+              </div>
+
+              <div class="fake-slider"><span></span></div>
+              <div class="fake-btn">Start alarm</div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-shadow"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="strip">
+    <div class="wrap strip-inner reveal">
+      <p>Built for the 6:40 local, the 90-minute cab, and every “wake me before my stop”.</p>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-group">
+        <span>6:40 local</span><i>◆</i><span>Yellow Line</span><i>◆</i><span>90-minute cab</span><i>◆</i>
+        <span>airport run</span><i>◆</i><span>last metro</span><i>◆</i><span>overnight bus</span><i>◆</i>
+        <span>Rajdhani</span><i>◆</i><span>hill road</span><i>◆</i><span>window seat</span><i>◆</i>
+        <span>office commute</span><i>◆</i>
+      </div>
+      <div class="marquee-group">
+        <span>6:40 local</span><i>◆</i><span>Yellow Line</span><i>◆</i><span>90-minute cab</span><i>◆</i>
+        <span>airport run</span><i>◆</i><span>last metro</span><i>◆</i><span>overnight bus</span><i>◆</i>
+        <span>Rajdhani</span><i>◆</i><span>hill road</span><i>◆</i><span>window seat</span><i>◆</i>
+        <span>office commute</span><i>◆</i>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Why it works</span>
+        <h2>A real alarm. Not a notification you’ll sleep through.</h2>
+        <p>Android treats notifications gently. Alarms do not. Destination Alarm lives on the alarm path.</p>
+      </div>
+
+      <div class="bento">
+        <article class="card b-wide reveal">
+          <div class="b-top">
+            <div class="ficon">🔊</div>
+            <span class="stream-tag"><i></i> ALARM STREAM</span>
+          </div>
+          <h3>Rings when the phone is on silent</h3>
+          <p>Audio plays on Android’s <b>alarm stream</b>, never media. While ringing, the app lifts alarm volume to 90% — so a muted phone still wakes you.</p>
+          <div class="wave" aria-hidden="true">
+            <i style="--h:.30"></i><i style="--h:.55"></i><i style="--h:.85"></i><i style="--h:.45"></i>
+            <i style="--h:.70"></i><i style="--h:.35"></i><i style="--h:.95"></i><i style="--h:.60"></i>
+            <i style="--h:.40"></i><i style="--h:.75"></i><i style="--h:.50"></i><i style="--h:.90"></i>
+            <i style="--h:.30"></i><i style="--h:.65"></i><i style="--h:.45"></i><i style="--h:.80"></i>
+            <i style="--h:.35"></i><i style="--h:.60"></i><i style="--h:.90"></i><i style="--h:.50"></i>
+            <i style="--h:.75"></i><i style="--h:.40"></i><i style="--h:.65"></i><i style="--h:.85"></i>
+          </div>
+          <div class="wave-legend"><span>Media — muted</span><span class="live"><i></i> Alarm — ringing</span></div>
+        </article>
+
+        <article class="card b-tall reveal" style="--d:.06s">
+          <div class="ficon">🚇</div>
+          <h3>Tunnel mode</h3>
+          <p>Signal dies underground. An ETA-seeded timer keeps counting and rings <b>before</b> your station.</p>
+          <div class="mini-timeline" aria-hidden="true">
+            <div class="mt"><span class="mt-dot"></span><b>Route ready</b><small>14 min</small></div>
+            <div class="mt"><span class="mt-dot"></span><b>Signal lost</b><small>timer starts</small></div>
+            <div class="mt"><span class="mt-dot hot"></span><b>Alarm rings</b><small>2 min early</small></div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="ficon">📍</div>
+          <h3>Pin-point picker</h3>
+          <div class="mini-map" aria-hidden="true">
+            <i class="mm-road a"></i><i class="mm-road b"></i>
+            <span class="mm-halo"></span><span class="mm-pin"></span>
+          </div>
+          <p>Search anywhere, then drag the map to place the pin on the platform exit — not the middle of the road.</p>
+        </article>
+
+        <article class="card reveal" style="--d:.06s">
+          <div class="ficon">⭐</div>
+          <h3>Saved places</h3>
+          <div class="mini-chips" aria-hidden="true"><span>🏠 Home</span><span>🏢 Work</span><span>⭐ Gym</span></div>
+          <p>Home, Work, Gym — one tap to arm. Long-press to remove.</p>
+        </article>
+
+        <article class="card reveal" style="--d:.12s">
+          <div class="ficon">🔋</div>
+          <h3>Works with the screen off</h3>
+          <div class="mini-lockline" aria-hidden="true"><b>07:42</b><span>⏰ 2 min to Rajiv Chowk</span></div>
+          <p>Foreground tracking survives a locked phone, and your trip comes back after a reboot.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section section-alt" id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Three steps</span>
+        <h2>Armed in under 20 seconds.</h2>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-visual">
+            <div class="mini-search">
+              <span>🔍</span><em>Rajiv Chowk</em>
+            </div>
+            <div class="mini-result"><span class="mr-ic">🚇</span><div><b>Rajiv Chowk Metro</b><small>New Delhi · 2.4 km</small></div></div>
+            <div class="mini-result"><span class="mr-ic">🏛️</span><div><b>Connaught Place</b><small>Block A · 2.9 km</small></div></div>
+          </div>
+          <span class="step-num">01</span>
+          <h3>Search or tap the map</h3>
+          <p>Global search via OpenStreetMap, or tap anywhere and drag to fine-tune.</p>
+        </div>
+
+        <div class="step reveal" style="--d:.08s">
+          <div class="step-visual center">
+            <div class="mini-pin">
+              <span class="ring r1"></span><span class="ring r2"></span>
+              <span class="pin-core">📍</span>
+            </div>
+            <div class="mini-tag">500 m radius</div>
+          </div>
+          <span class="step-num">02</span>
+          <h3>Pick radius &amp; early ring</h3>
+          <p>Ring at 200 m–2 km, or a few minutes before arrival for metro tunnels.</p>
+        </div>
+
+        <div class="step reveal" style="--d:.16s">
+          <div class="step-visual center">
+            <div class="mini-lock">
+              <div class="lock-screen">
+                <div class="lk-time">07:42</div>
+                <div class="lk-alarm">⏰ Destination Alarm<br><small>2 min to Rajiv Chowk</small></div>
+              </div>
+            </div>
+          </div>
+          <span class="step-num">03</span>
+          <h3>Lock it and relax</h3>
+          <p>Put the phone face-down. It rings, vibrates and wakes the screen on arrival.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE DEMO -->
+  <section class="section demo-section" id="demo">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Try it — no download</span>
+        <h2>Drag the slider. Watch it ring.</h2>
+        <p>This is the last 2.8 km of a trip. The pin is your stop, the ring starts at 500 m. Go on, take it for a spin.</p>
+      </div>
+
+      <div class="demo-grid">
+        <div class="demo-stage reveal" id="demoStage">
+          <div class="demo-phone">
+            <div class="screen">
+              <svg class="map" viewBox="0 0 300 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <rect width="300" height="560" fill="#0A1210"/>
+                <g fill="#0F1A15">
+                  <rect x="8" y="62" width="62" height="48" rx="5"/>
+                  <rect x="82" y="54" width="54" height="56" rx="5"/>
+                  <rect x="148" y="66" width="66" height="44" rx="5"/>
+                  <rect x="226" y="56" width="66" height="56" rx="5"/>
+                  <rect x="14" y="134" width="56" height="46" rx="5"/>
+                  <rect x="84" y="128" width="70" height="52" rx="5"/>
+                  <rect x="170" y="132" width="58" height="46" rx="5"/>
+                  <rect x="242" y="136" width="52" height="42" rx="5"/>
+                  <rect x="16" y="330" width="58" height="44" rx="5"/>
+                  <rect x="90" y="322" width="52" height="54" rx="5"/>
+                  <rect x="158" y="332" width="68" height="44" rx="5"/>
+                  <rect x="238" y="326" width="54" height="50" rx="5"/>
+                  <rect x="20" y="402" width="62" height="48" rx="5"/>
+                  <rect x="98" y="398" width="50" height="54" rx="5"/>
+                  <rect x="168" y="408" width="64" height="44" rx="5"/>
+                </g>
+                <path d="M196 300c24-16 58-6 74 16s12 52-8 66-56 6-72-12-18-52 6-70z" fill="#0E271C"/>
+                <path d="M-30 232C46 258 76 322 158 338s116 46 180 58" stroke="#0B2A3C" stroke-width="30" fill="none" stroke-linecap="round"/>
+                <path d="M-30 232C46 258 76 322 158 338s116 46 180 58" stroke="#103C55" stroke-width="3" fill="none" opacity=".7"/>
+                <g stroke="#192621" stroke-width="8" stroke-linecap="round" fill="none">
+                  <path d="M-10 180 L312 206"/>
+                  <path d="M56 -10 L90 570"/>
+                  <path d="M-10 472 L312 452"/>
+                </g>
+                <g stroke="#15201C" stroke-width="3.5" stroke-linecap="round" fill="none">
+                  <path d="M-10 288 L312 308"/>
+                  <path d="M184 -10 L196 570"/>
+                </g>
+                <g fill="#3C4F45" font-size="6.4" letter-spacing="1.2" font-family="system-ui,sans-serif">
+                  <text x="14" y="156">CONNAUGHT PLACE</text>
+                  <text x="196" y="392">INDIA GATE</text>
+                </g>
+              </svg>
+
+              <svg class="demo-route" viewBox="0 0 300 560" preserveAspectRatio="none" aria-hidden="true">
+                <path class="demo-base" d="M 52 372 C 84 330 130 288 186 168"/>
+                <path class="demo-progress" id="demoProgress" d="M 52 372 C 84 330 130 288 186 168"/>
+              </svg>
+
+              <div class="dest-pin demo-dest"><span class="halo"></span><span class="pin-dot"></span></div>
+              <div class="demo-user" id="demoUser"></div>
+
+              <div class="phone-ui">
+                <div class="search-pill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="#8FA399" stroke-width="2"/><path d="m16 16 4 4" stroke="#8FA399" stroke-width="2" stroke-linecap="round"/></svg>
+                  <span>Search any place…</span>
+                </div>
+                <div class="armed-pill"><i></i> Alarm armed</div>
+              </div>
+
+              <div class="sheet demo-sheet">
+                <div class="grab"></div>
+                <div class="sheet-head">
+                  <div class="ic">📍</div>
+                  <div class="sheet-title"><strong>Rajiv Chowk Metro</strong><span>500 m radius · Transit</span></div>
+                  <div class="star">⭐</div>
+                </div>
+                <div class="stats">
+                  <div class="stat"><small>DISTANCE</small><b class="blue" id="demoDist">2.8 km</b></div>
+                  <div class="stat"><small>ETA</small><b class="green" id="demoEta">7 min</b></div>
+                  <div class="stat"><small>RING AT</small><b class="amber">500 m</b></div>
+                </div>
+              </div>
+
+              <div class="alarm-overlay" id="alarmOverlay">
+                <div class="alarm-clock">07:42</div>
+                <div class="alarm-title">Destination Alarm</div>
+                <div class="alarm-sub">You’re 2 min from Rajiv Chowk</div>
+                <div class="alarm-actions"><span>Dismiss</span><span>Snooze 5 min</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-controls reveal" style="--d:.1s">
+          <div class="demo-status" id="demoStatus">
+            <span class="ds-dot"></span><span id="demoStatusText">Cruising — 2.8 km to go</span>
+          </div>
+          <label class="demo-label" for="demoSlider">Distance to your stop</label>
+          <input id="demoSlider" class="demo-slider" type="range" min="0" max="2800" step="10" value="2800">
+          <div class="demo-scale"><span>At the stop</span><span>2.8 km away</span></div>
+
+          <div class="demo-actions">
+            <button class="btn btn-primary" id="soundBtn" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Hear the alarm</span>
+            </button>
+            <button class="btn btn-ghost" id="demoReset" type="button">Reset</button>
+          </div>
+
+          <p class="demo-note">
+            Sound is synthesised in your browser. The app plays your phone’s own alarm tone —
+            on the alarm stream, so silent mode can’t stop it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TUNNEL -->
+  <section class="section">
+    <div class="wrap">
+      <div class="tunnel reveal">
+        <div class="tunnel-copy">
+          <span class="eyebrow">Underground</span>
+          <h2>No signal is not an excuse to miss your stop.</h2>
+          <p>
+            Metro tunnels, basements and hill roads kill GPS. Destination Alarm seeds a countdown
+            from the last known route ETA, so the alarm still fires on time — even if the map
+            goes blank for ten minutes.
+          </p>
+          <ul class="ticks">
+            <li>GPS geofence when the signal is alive</li>
+            <li>ETA dead-man timer when it disappears</li>
+            <li>8-second grace period so a false fix can’t trigger early</li>
+          </ul>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <span class="tl-dot"></span>
+            <b>Route ready</b>
+            <small>ETA 14 min</small>
+          </div>
+          <div class="tl-item">
+            <span class="tl-dot"></span>
+            <b>Signal lost</b>
+            <small>countdown starts</small>
+          </div>
+          <div class="tl-item">
+            <span class="tl-dot warning"></span>
+            <b>2 min left</b>
+            <small>still underground</small>
+          </div>
+          <div class="tl-item">
+            <span class="tl-dot ring"></span>
+            <b>Alarm rings</b>
+            <small>before your stop</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section class="section section-alt" id="privacy">
+    <div class="wrap privacy-inner">
+      <div class="privacy-copy reveal">
+        <span class="eyebrow">Privacy</span>
+        <h2>Your location is nobody’s business.</h2>
+        <p>
+          No login screen, because there is no account. Destination Alarm computes everything
+          on your phone and keeps it there — the simplest privacy policy is not needing one.
+        </p>
+        <ul class="ticks">
+          <li>No name, email or phone number</li>
+          <li>No analytics, ads or third-party trackers</li>
+          <li>No location history uploaded</li>
+          <li>“Delete all data” wipes everything instantly</li>
+        </ul>
+      </div>
+
+      <div class="privacy-card reveal" style="--d:.1s">
+        <div class="pc-row"><span>📍</span><div><b>Search requests</b><small>Sent to free OpenStreetMap services to find places. Not linked to you.</small></div></div>
+        <div class="pc-row"><span>🗺️</span><div><b>Map tiles</b><small>OpenFreeMap — no account, no API key, no billing.</small></div></div>
+        <div class="pc-row"><span>📱</span><div><b>Your trips</b><small>Stored only in this app’s local storage on your phone.</small></div></div>
+        <div class="pc-note">What the app never does: sell data, build a profile, or ask you to sign in.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap wrap-narrow">
+      <div class="section-head reveal">
+        <span class="eyebrow">Questions</span>
+        <h2>Straight answers.</h2>
+      </div>
+
+      <div class="faq reveal">
+        <details open>
+          <summary>Will it ring if my phone is on silent?</summary>
+          <p>Yes. The tone plays on Android’s <b>alarm</b> audio stream and the app raises alarm volume to 90% while ringing. On Do Not Disturb, allow “Alarms” in the DND settings so the system doesn’t block it.</p>
+        </details>
+
+        <details>
+          <summary>Does it work on iPhone?</summary>
+          <p>No. iOS does not let third-party apps run background location indefinitely or bypass the silent switch. This is an Android app — Android 8.0 or newer.</p>
+        </details>
+
+        <details>
+          <summary>Do I need internet while the alarm is armed?</summary>
+          <p>For search and the initial route, yes. Once armed, distance tracking and the alarm itself work offline. If the route can’t be fetched, the GPS geofence still fires normally.</p>
+        </details>
+
+        <details>
+          <summary>How much battery does it use?</summary>
+          <p>Tracking uses GPS continuously, so expect a few percent per hour. For long journeys, plug in — the app is designed to run for hours with the screen off.</p>
+        </details>
+
+        <details>
+          <summary>My Xiaomi / Oppo / Vivo kills the app. What now?</summary>
+          <p>Open the app’s battery settings and allow <b>Autostart</b> plus “No restrictions”. On MIUI also lock the app in the recent-apps screen. This is an OEM restriction, not an app bug.</p>
+        </details>
+
+        <details>
+          <summary>Is it really free? Where’s the map from?</summary>
+          <p>Free, no ads, no account. Maps come from OpenFreeMap, search from Photon + Nominatim, routing from OSRM — all OpenStreetMap-based. No Google Maps billing, no API key.</p>
+        </details>
+
+        <details>
+          <summary>Is the APK safe to install?</summary>
+          <p>It’s signed with a debug key for direct installation, so Android will ask you to allow “Install unknown apps” for your browser. A Play Store build is the next step; until then, download only from this page.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section class="section download-section" id="download">
+    <div class="wrap">
+      <div class="download-card reveal">
+        <div class="dc-glow"></div>
+        <div class="dc-main">
+          <span class="eyebrow">Android · v1.3</span>
+          <h2>Get it on your phone.</h2>
+          <p>68 MB · Android 8.0+ · No account needed. Installs over an existing v1.2 build.</p>
+
+          <div class="dc-actions">
+            <a class="btn btn-primary btn-lg" href="DestinationAlarm.apk" download>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v11m0 0 4.2-4.2M12 14l-4.2-4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17.5V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Download APK
+            </a>
+          </div>
+
+          <div class="checksum">
+            <span>SHA-256</span>
+            <code id="sha">9700e0aa474755b51241344a57f76ca5a1148178b2b72b2f2bb2ea9520798a4e</code>
+            <button class="copy" id="copySha" type="button">Copy</button>
+          </div>
+        </div>
+
+        <div class="dc-steps">
+          <h3>Install in 4 taps</h3>
+          <ol>
+            <li>Download the APK on your Android phone.</li>
+            <li>Open it → allow <b>Install unknown apps</b> for your browser.</li>
+            <li>Install and open — permissions are requested automatically.</li>
+            <li>Search a place, confirm the pin, tap <b>Start alarm</b>.</li>
+          </ol>
+          <p class="dc-note">First launch asks for location, background location, notifications and battery exemption. Say yes to all four — the alarm needs them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <svg viewBox="0 0 40 40" width="28" height="28" aria-hidden="true">
+        <rect width="40" height="40" rx="11" fill="#0E1A14"/>
+        <path d="M20 7c-4.1 0-7.4 3.3-7.4 7.4 0 5.5 7.4 13.6 7.4 13.6s7.4-8.1 7.4-13.6C27.4 10.3 24.1 7 20 7z" fill="#46E07A"/>
+        <circle cx="20" cy="14.3" r="4.4" fill="#08120D"/>
+        <path d="M20 11.8v2.6l1.7 1" stroke="#46E07A" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span>Destination Alarm</span>
+    </div>
+    <p class="footer-note">Free maps · © OpenStreetMap contributors · MapLibre · OpenFreeMap · Photon · Nominatim · OSRM</p>
+    <p class="footer-copy"><a href="privacy.html" style="color:#8fbfa3">Privacy Policy</a> · destination-alarm.netlify.app · © <span id="year">2026</span> Destination Alarm · Made for commuters in India</p>
+  </div>
+</footer>
+
+<div class="sticky-cta" id="stickyCta">
+  <div class="sc-text"><b>Destination Alarm</b><span>68 MB · Android 8.0+</span></div>
+  <a class="btn btn-primary" href="DestinationAlarm.apk" download>Download APK</a>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

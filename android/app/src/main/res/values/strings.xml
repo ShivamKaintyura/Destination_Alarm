@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Destination Alarm</string>
+    <string name="channel_tracking">Trip tracking</string>
+    <string name="channel_alarm">Alarm</string>
+</resources>
